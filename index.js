@@ -3,13 +3,14 @@ var app = express();
 var redis = require("redis");
 var client = redis.createClient();
 
-client.on('error', (err) => console.log('Redis Client Error', err));
-
 client.connect();
+
+client.on('error', (err) => console.log('Redis Client Error', err));
 
 // serve static files from public directory
 app.use(express.static("public"));
 // init values
+
 client.mset("header", 1, "left", 1, "article", 1, "right", 1, "footer", 1);
 
 client.mget(
